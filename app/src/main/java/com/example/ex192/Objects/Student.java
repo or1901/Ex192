@@ -8,15 +8,16 @@ package com.example.ex192.Objects;
  * @since 12/4/2024
  */
 public class Student {
-    private String privateName, familyName;
+    private String privateName, familyName, id;
     private int grade, classNum;
     private boolean canImmune;
     private Vaccine firstVaccine, secondVaccine;
 
-    public Student(String privateName, String familyName, int grade, int classNum,
+    public Student(String privateName, String familyName, String id, int grade, int classNum,
                    boolean canImmune, Vaccine firstVaccine, Vaccine secondVaccine) {
         this.privateName = privateName;
         this.familyName = familyName;
+        this.id = id;
         this.grade = grade;
         this.classNum = classNum;
         this.canImmune = canImmune;
@@ -27,6 +28,7 @@ public class Student {
     public Student() {
         this.privateName = "";
         this.familyName = "";
+        this.id = "";
         this.grade = 0;
         this.classNum = 0;
         this.canImmune = false;
@@ -40,6 +42,10 @@ public class Student {
 
     public String getFamilyName() {
         return this.familyName;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public int getGrade() {
@@ -68,6 +74,10 @@ public class Student {
 
     public void setFamilyName(String name) {
         this.familyName = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setGrade(int grade) {
