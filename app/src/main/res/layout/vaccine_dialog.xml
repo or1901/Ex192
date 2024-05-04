@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="275dp"
-    android:layout_height="275dp"
-    android:background="#83c5be"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3" />
+        android:layout_width="220dp"
+        android:layout_height="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,56 +15,20 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="Vaccine 1"
-            android:textColor="#edf6f9"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_width="175dp"
+            android:layout_height="40dp"
             android:gravity="left|center_vertical"
             android:text="Place of Vaccination"
-            android:textColor="#edf6f9"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_width="35dp"
+            android:layout_height="40dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,15 +38,13 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
 
         <EditText
             android:id="@+id/dialogEtPlace"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:ems="10"
             android:hint="Enter vaccine place"
             android:inputType="textPostalAddress" />
@@ -98,8 +58,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2" />
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,24 +67,20 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_width="175dp"
+            android:layout_height="40dp"
             android:gravity="left|center_vertical"
             android:text="Vaccination Date"
-            android:textColor="#edf6f9"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_width="35dp"
+            android:layout_height="40dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -135,30 +90,26 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
 
         <EditText
             android:id="@+id/dialogEtDate"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_width="175dp"
+            android:layout_height="40dp"
             android:ems="10"
             android:hint="Select date"
             android:inputType="date" />
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2.5" />
+            android:layout_width="35dp"
+            android:layout_height="40dp" />
 
     </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7" />
+        android:layout_height="10dp" />
 
 
 </LinearLayout>
