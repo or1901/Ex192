@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +26,8 @@ public class AddStudentActivity extends AppCompatActivity {
     ArrayAdapter<String> spinnerAdp;
     AlertDialog.Builder adb;
     LinearLayout vaccineDialog;
-    EditText dialogEtPlace, dialogEtDate;
+    EditText dialogEtPlace, dialogEtDate, etPrivateName, etFamilyName, etId, etClass;
+    Switch swCanImmune;
     int currentVaccine;
     Vaccine[] vaccinesData;
     Context activityContext;
@@ -67,7 +69,12 @@ public class AddStudentActivity extends AppCompatActivity {
      * This function initializes the views objects.
      */
     private void initViews() {
+        etPrivateName = findViewById(R.id.etPrivateName);
+        etFamilyName = findViewById(R.id.etFamilyName);
+        etId = findViewById(R.id.etId);
+        etClass = findViewById(R.id.etClass);
         spGrades = findViewById(R.id.spGrades);
+
 
         spinnerAdp = new ArrayAdapter<>(this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, grades);
@@ -130,5 +137,32 @@ public class AddStudentActivity extends AppCompatActivity {
                 year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private boolean areFieldsFull() {
+        return (!etPrivateName.getText().toString().isEmpty()) &&
+                (!etFamilyName.getText().toString().isEmpty()) &&
+                (!etId.getText().toString().isEmpty()) &&
+                (!etClass.getText().toString().isEmpty());
+    }
+
+    private boolean isValidClass() {
+        return Integer.parseInt(etClass.getText().toString()) > 0;
+    }
+
+    public void saveStudent(View view) {
+        if(areFieldsFull()) {
+            if(isValidClass()) {
+
+            }
+            else {
+                Toast.makeText(activityContext, "Class number isn't valid!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(activityContext, "There is an empty field!",
+                    Toast.LENGTH_SHORT).show();
+            }
     }
 }
