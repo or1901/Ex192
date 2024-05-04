@@ -23,6 +23,13 @@ public class Vaccine {
         date = Calendar.getInstance();
     }
 
+    public Vaccine(Vaccine otherVaccine) {
+        if(otherVaccine != null) {
+            this.placeTaken = otherVaccine.placeTaken;
+            this.date = otherVaccine.date;
+        }
+    }
+
     public String getPlaceTaken() {
         return this.placeTaken;
     }

@@ -21,8 +21,8 @@ public class Student {
         this.grade = grade;
         this.classNum = classNum;
         this.canImmune = canImmune;
-        this.firstVaccine = firstVaccine;
-        this.secondVaccine = secondVaccine;
+        this.firstVaccine = new Vaccine(firstVaccine);
+        this.secondVaccine = new Vaccine(secondVaccine);
     }
 
     public Student() {
@@ -93,10 +93,10 @@ public class Student {
     }
 
     public void setFirstVaccine(Vaccine vaccine) {
-        this.firstVaccine = new Vaccine(vaccine.getPlaceTaken(), vaccine.getDate());
+        this.firstVaccine = new Vaccine(vaccine);
     }
 
     public void setSecondVaccine(Vaccine vaccine) {
-        this.secondVaccine = new Vaccine(vaccine.getPlaceTaken(), vaccine.getDate());
+        this.secondVaccine = new Vaccine(vaccine);
     }
 }
