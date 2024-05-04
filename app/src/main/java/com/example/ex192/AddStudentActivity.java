@@ -1,5 +1,7 @@
 package com.example.ex192;
 
+import static com.example.ex192.FBRef.REF_STUDENTS;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ex192.Objects.Student;
 import com.example.ex192.Objects.Vaccine;
 
 import java.util.Calendar;
@@ -74,7 +77,7 @@ public class AddStudentActivity extends AppCompatActivity {
         etId = findViewById(R.id.etId);
         etClass = findViewById(R.id.etClass);
         spGrades = findViewById(R.id.spGrades);
-
+        swCanImmune = findViewById(R.id.swCanImmune);
 
         spinnerAdp = new ArrayAdapter<>(this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, grades);
@@ -150,10 +153,34 @@ public class AddStudentActivity extends AppCompatActivity {
         return Integer.parseInt(etClass.getText().toString()) > 0;
     }
 
+    private Student getCurrentStudent() {
+        return new Student(etPrivateName.getText().toString(),
+                etFamilyName.getText().toString(), etId.getText().toString(),
+                spGrades.getSelectedItemPosition() + 6,
+                Integer.parseInt(etClass.getText().toString()), swCanImmune.isChecked(),
+                vaccinesData[0], vaccinesData[1]
+        );
+    }
+
+    private void resetEmptyVaccines() {
+        if(vaccinesData[0].getPlaceTaken().isEmpty()) {
+            vaccinesData[0].setDate(null);
+        }
+        if(vaccinesData[1].getPlaceTaken().isEmpty()) {
+            vaccinesData[1].setDate(null);
+        }
+    }
+
     public void saveStudent(View view) {
         if(areFieldsFull()) {
             if(isValidClass()) {
+                resetEmptyVaccines();
+                Student student = getCurrentStudent();
 
+                REF_STUDENTS.child(etId.getText().toString()).setValue(student);
+
+                Toast.makeText(activityContext, "Student saved!",
+                        Toast.LENGTH_SHORT).show();
             }
             else {
                 Toast.makeText(activityContext, "Class number isn't valid!",

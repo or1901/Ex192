@@ -13,5 +13,5 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FBRef {
     public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
 
-    public static DatabaseReference refStudents = FBDB.getReference("Students");
+    public static DatabaseReference REF_STUDENTS = FBDB.getReference("Students");
 }
