@@ -110,13 +110,25 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     public void getFirstVaccineData(View view) {
-        currentVaccine = 0;
-        displayVaccineDialog(1);
+        if(swCanImmune.isChecked()) {
+            currentVaccine = 0;
+            displayVaccineDialog(1);
+        }
+        else {
+            Toast.makeText(activityContext, "Student can't immune!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void getSecondVaccineData(View view) {
-        currentVaccine = 1;
-        displayVaccineDialog(2);
+        if(swCanImmune.isChecked()) {
+            currentVaccine = 1;
+            displayVaccineDialog(2);
+        }
+        else {
+            Toast.makeText(activityContext, "Student can't immune!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void dialogChooseDate(View view) {
