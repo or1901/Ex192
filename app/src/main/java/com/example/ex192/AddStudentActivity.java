@@ -1,6 +1,7 @@
 package com.example.ex192;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -27,12 +28,23 @@ public class AddStudentActivity extends AppCompatActivity {
     EditText dialogEtPlace, dialogEtDate;
     int currentVaccine;
     Vaccine[] vaccinesData;
+    Context activityContext;
 
     DialogInterface.OnClickListener onDialogBtnClick = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
             // Save button
             if(which == DialogInterface.BUTTON_POSITIVE) {
+                if(dialogEtPlace.getText().toString().isEmpty() || dialogEtDate.getText().toString().isEmpty()) {
+                    Toast.makeText(activityContext, "Place or date are empty!",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    vaccinesData[currentVaccine].setPlaceTaken(dialogEtPlace.getText().toString());
+                    Toast.makeText(activityContext, "Vaccine " + (currentVaccine + 1) +
+                                    " saved!", Toast.LENGTH_SHORT).show();
+                }
             }
 
             // Cancel button
@@ -65,6 +77,8 @@ public class AddStudentActivity extends AppCompatActivity {
         vaccinesData = new Vaccine[2];
         vaccinesData[0] = new Vaccine();
         vaccinesData[1] = new Vaccine();
+
+        activityContext = this;
     }
 
     private void displayVaccineDialog(int vaccineNum) {
