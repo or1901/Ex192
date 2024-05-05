@@ -219,7 +219,7 @@ public class AddStudentActivity extends AppCompatActivity {
     private Student getCurrentStudent() {
         return new Student(etPrivateName.getText().toString(),
                 etFamilyName.getText().toString(), etId.getText().toString(),
-                spGrades.getSelectedItemPosition() + 6,
+                getSelectedGrade(),
                 Integer.parseInt(etClass.getText().toString()), swCanImmune.isChecked(),
                 vaccinesData[0], vaccinesData[1]
         );
@@ -239,6 +239,14 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     /**
+     * This function gets the selected grade in the grades spinner.
+     * @return The selected grade in the grades spinner.
+     */
+    private int getSelectedGrade() {
+        return spGrades.getSelectedItemPosition() + 6;
+    }
+
+    /**
      * This function saves the current Student's data in the DB - if all the fields are valid.
      * @param view The view object of the button that was clicked in order to save the Student.
      */
@@ -249,7 +257,9 @@ public class AddStudentActivity extends AppCompatActivity {
                 resetEmptyVaccines();
                 Student student = getCurrentStudent();
 
-                REF_STUDENTS.child(etId.getText().toString()).setValue(student);
+                REF_STUDENTS.child("" + getSelectedGrade())
+                        .child(etClass.getText().toString())
+                        .child(etId.getText().toString()).setValue(student);
 
                 Toast.makeText(activityContext, "Student saved!",
                         Toast.LENGTH_SHORT).show();
