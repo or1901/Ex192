@@ -5,7 +5,10 @@ import static com.example.ex192.FBRef.REF_STUDENTS;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +45,7 @@ public class AddStudentActivity extends AppCompatActivity {
     int currentVaccine;
     Vaccine[] vaccinesData;
     Context activityContext;
+    Intent si;
 
     DialogInterface.OnClickListener onDialogBtnClick = new DialogInterface.OnClickListener() {
 
@@ -102,6 +107,7 @@ public class AddStudentActivity extends AppCompatActivity {
         vaccinesData[1] = new Vaccine();
 
         activityContext = this;
+        si = new Intent();
     }
 
     /**
@@ -273,5 +279,34 @@ public class AddStudentActivity extends AppCompatActivity {
             Toast.makeText(activityContext, "There is an empty field!",
                     Toast.LENGTH_SHORT).show();
             }
+    }
+
+    /**
+     * This function presents the options menu for moving between activities.
+     * @param menu the options menu in which you place your items.
+     * @return true in order to show the menu, otherwise false.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * This function reacts to the user choice in the options menu - it moves to the chosen
+     * activity from the menu, or resets the current one.
+     * @param item the menu item that was selected.
+     * @return must return true for the menu to react.
+     */
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.menuAllStudents){
+            si.setClass(this, AllStudentsActivity.class);
+            startActivity(si);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
