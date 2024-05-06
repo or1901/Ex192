@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "677370112765",
+    "firebase_url": "https://cyberex192-default-rtdb.firebaseio.com",
+    "project_id": "cyberex192",
+    "storage_bucket": "cyberex192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677370112765:android:b14cb05b73a482d0096c94",
+        "android_client_info": {
+          "package_name": "com.example.ex192"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdQx4-v5f5abakZeJGyfxNhDqIEhmoepM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
