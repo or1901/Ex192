@@ -257,10 +257,10 @@ public class AddStudentActivity extends AppCompatActivity {
      */
     private void resetEmptyVaccines() {
         if(vaccinesData[0].getPlaceTaken().isEmpty()) {
-            vaccinesData[0].setDate(null);
+            vaccinesData[0] = null;
         }
         if(vaccinesData[1].getPlaceTaken().isEmpty()) {
-            vaccinesData[1].setDate(null);
+            vaccinesData[1] = null;
         }
     }
 
