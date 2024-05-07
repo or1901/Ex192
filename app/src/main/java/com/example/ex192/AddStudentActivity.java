@@ -169,10 +169,11 @@ public class AddStudentActivity extends AppCompatActivity {
      */
     public void dialogChooseDate(View view) {
         // Saves the current time details, in order to display it in the picker
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar nowCalendar = Calendar.getInstance();
+        int year = nowCalendar.get(Calendar.YEAR);
+        int month = nowCalendar.get(Calendar.MONTH);
+        int day = nowCalendar.get(Calendar.DAY_OF_MONTH);
+        Calendar chosenDate = Calendar.getInstance();
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 AddStudentActivity.this,
@@ -187,10 +188,16 @@ public class AddStudentActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        dialogEtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        calendar.set(year, monthOfYear + 1, dayOfMonth);
+                        chosenDate.set(year, monthOfYear, dayOfMonth);
 
-                        vaccinesData[currentVaccine].setDate(calendar);
+                        if(chosenDate.after(nowCalendar)) {
+                            Toast.makeText(activityContext, "You can't choose a future date!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            dialogEtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            vaccinesData[currentVaccine].setDate(chosenDate);
+                        }
                     }
                 },
                 year, month, day);
