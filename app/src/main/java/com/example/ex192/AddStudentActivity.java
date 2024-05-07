@@ -24,7 +24,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ex192.Objects.Student;
 import com.example.ex192.Objects.Vaccine;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -46,6 +50,7 @@ public class AddStudentActivity extends AppCompatActivity {
     Vaccine[] vaccinesData;
     Context activityContext;
     Intent si;
+    ArrayList<String> idsList;
 
     DialogInterface.OnClickListener onDialogBtnClick = new DialogInterface.OnClickListener() {
 
@@ -86,6 +91,13 @@ public class AddStudentActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        getSavedIds();
+    }
+
     /**
      * This function initializes the views objects.
      */
@@ -108,6 +120,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
         activityContext = this;
         si = new Intent();
+        idsList = new ArrayList<>();
     }
 
     /**
@@ -260,22 +273,62 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     /**
+     * This function gets all the students ids from the DB, and saves it in the ids array list.
+     */
+    private void getSavedIds() {
+        REF_STUDENTS.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                idsList.clear();
+
+                for(DataSnapshot gradeData : snapshot.getChildren())
+                {
+                    for(DataSnapshot classData : gradeData.getChildren())
+                    {
+                        for(DataSnapshot studData : classData.getChildren())
+                        {
+                            idsList.add(studData.getKey());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(activityContext, "Failed reading from the DB!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
      * This function saves the current Student's data in the DB - if all the fields are valid.
      * @param view The view object of the button that was clicked in order to save the Student.
      */
     public void saveStudent(View view) {
         if(areFieldsFull())
         {
-            if(isValidClass()) {
-                resetEmptyVaccines();
-                Student student = getCurrentStudent();
+            if(isValidClass())
+            {
+                if(!idsList.contains(etId.getText().toString()))  // If id doesn't exist
+                {
+                    resetEmptyVaccines();
+                    Student student = getCurrentStudent();
 
-                REF_STUDENTS.child("" + getSelectedGrade())
-                        .child(etClass.getText().toString())
-                        .child(etId.getText().toString()).setValue(student);
+                    REF_STUDENTS.child("" + getSelectedGrade())
+                            .child(etClass.getText().toString())
+                            .child(etId.getText().toString()).setValue(student);
 
-                Toast.makeText(activityContext, "Student saved!",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activityContext, "Student saved!",
+                            Toast.LENGTH_SHORT).show();
+
+                    idsList.add(etId.getText().toString());  // Adds the new student id to the list
+                }
+
+                else {
+                    Toast.makeText(activityContext, "Student id already exists!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
             else {
                 Toast.makeText(activityContext, "Class number isn't valid!",
