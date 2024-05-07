@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="320dp"
     android:layout_height="80dp"
+    android:background="#83c5be"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,28 +17,31 @@
             android:id="@+id/lvTvName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="1.55"
             android:gravity="left|center_vertical"
             android:text="Ori Roitzaid"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lvTvGrade"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="1.45"
             android:gravity="left|center_vertical"
             android:text="11th grade"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lvTvClass"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:gravity="left|center_vertical"
             android:text="Class 5"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/lvImVaccine1"
@@ -61,7 +65,8 @@
             android:layout_weight="4"
             android:gravity="left|center_vertical"
             android:text="Id: 12345678"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/lvImVaccine2"
