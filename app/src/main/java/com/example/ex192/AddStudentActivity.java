@@ -35,7 +35,7 @@ import java.util.Calendar;
  * @since 9/4/2024
  */
 public class AddStudentActivity extends AppCompatActivity {
-    String[] grades = {"6th", "7th", "8th", "9th", "10th", "11th", "12th"};
+    String[] grades = {"7th", "8th", "9th", "10th", "11th", "12th"};
     Spinner spGrades;
     ArrayAdapter<String> spinnerAdp;
     AlertDialog.Builder adb;
@@ -249,7 +249,7 @@ public class AddStudentActivity extends AppCompatActivity {
      * @return The selected grade in the grades spinner.
      */
     private int getSelectedGrade() {
-        return spGrades.getSelectedItemPosition() + 6;
+        return spGrades.getSelectedItemPosition() + 7;
     }
 
     /**
