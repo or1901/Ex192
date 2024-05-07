@@ -89,7 +89,7 @@ public class StudentAdapter extends BaseAdapter {
 
         lvTvName.setText(student.getPrivateName() + " " + student.getFamilyName());
         lvTvGrade.setText(student.getGrade() + "th grade");
-        lvTvClass.setText("Class " + student.getClass());
+        lvTvClass.setText("Class " + student.getClassNum());
         lvTvId.setText("Id: " + student.getId());
 
         if(!student.getCanImmune())
