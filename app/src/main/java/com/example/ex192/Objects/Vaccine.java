@@ -11,22 +11,22 @@ import java.util.Calendar;
  */
 public class Vaccine {
     private String placeTaken;
-    private Calendar date;
+    private long dateInMillis;
 
-    public Vaccine(String placeTaken, Calendar date) {
+    public Vaccine(String placeTaken, long timeInMillis) {
         this.placeTaken = placeTaken;
-        this.date = date;
+        this.dateInMillis = timeInMillis;
     }
 
     public Vaccine() {
-        placeTaken = "";
-        date = Calendar.getInstance();
+        this.placeTaken = null;
+        this.dateInMillis = Calendar.getInstance().getTimeInMillis();
     }
 
     public Vaccine(Vaccine otherVaccine) {
         if(otherVaccine != null) {
             this.placeTaken = otherVaccine.placeTaken;
-            this.date = otherVaccine.date;
+            this.dateInMillis = otherVaccine.dateInMillis;
         }
     }
 
@@ -34,15 +34,15 @@ public class Vaccine {
         return this.placeTaken;
     }
 
-    public Calendar getDate() {
-        return this.date;
+    public long getDate() {
+        return this.dateInMillis;
     }
 
     public void setPlaceTaken(String placeTaken) {
         this.placeTaken = placeTaken;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setDate(long timeInMillis) {
+        this.dateInMillis = timeInMillis;
     }
 }
