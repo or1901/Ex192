@@ -209,7 +209,7 @@ public class AddStudentActivity extends AppCompatActivity {
                         }
                         else {
                             dialogEtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            vaccinesData[currentVaccine].setDate(chosenDate);
+                            vaccinesData[currentVaccine].setDate(chosenDate.getTimeInMillis());
                         }
                     }
                 },
@@ -256,10 +256,10 @@ public class AddStudentActivity extends AppCompatActivity {
      * them - may occur when the user chose only date and then closed the alert dialog.
      */
     private void resetEmptyVaccines() {
-        if(vaccinesData[0].getPlaceTaken().isEmpty()) {
+        if(vaccinesData[0].getPlaceTaken() == null) {
             vaccinesData[0] = null;
         }
-        if(vaccinesData[1].getPlaceTaken().isEmpty()) {
+        if(vaccinesData[1].getPlaceTaken() == null) {
             vaccinesData[1] = null;
         }
     }
@@ -323,6 +323,9 @@ public class AddStudentActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
 
                     idsList.add(etId.getText().toString());  // Adds the new student id to the list
+
+                    vaccinesData[0] = new Vaccine();
+                    vaccinesData[1] = new Vaccine();
                 }
 
                 else {
