@@ -92,17 +92,20 @@ public class StudentAdapter extends BaseAdapter {
         lvTvClass.setText("Class " + student.getClass());
         lvTvId.setText("Id: " + student.getId());
 
-        if(student.getFirstVaccine().getDate() != 0)
-        {
-            lvImVaccine1.setImageResource(R.drawable.vaccine);
-        }
-        if(student.getSecondVaccine().getDate() != 0)
-        {
-            lvImVaccine2.setImageResource(R.drawable.vaccine);
-        }
-        else if(student.getFirstVaccine().getDate() == 0)
+        if(!student.getCanImmune())
         {
             lvImVaccine1.setImageResource(R.drawable.cannot_immune);
+        }
+        else
+        {
+            if(student.getFirstVaccine().getDate() != 0)
+            {
+                lvImVaccine1.setImageResource(R.drawable.vaccine);
+            }
+            if(student.getSecondVaccine().getDate() != 0)
+            {
+                lvImVaccine2.setImageResource(R.drawable.vaccine);
+            }
         }
 
         return view;
