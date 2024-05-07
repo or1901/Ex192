@@ -89,18 +89,18 @@ public class StudentAdapter extends BaseAdapter {
 
         lvTvName.setText(student.getPrivateName() + " " + student.getFamilyName());
         lvTvGrade.setText(student.getGrade() + "th grade");
-        lvTvClass.setText(student.getClass() + " Class");
+        lvTvClass.setText("Class " + student.getClass());
         lvTvId.setText("Id: " + student.getId());
 
-        if(student.getFirstVaccine() != null)
+        if(student.getFirstVaccine().getDate() != 0)
         {
             lvImVaccine1.setImageResource(R.drawable.vaccine);
         }
-        if(student.getSecondVaccine() != null)
+        if(student.getSecondVaccine().getDate() != 0)
         {
             lvImVaccine2.setImageResource(R.drawable.vaccine);
         }
-        else if(student.getFirstVaccine() == null)
+        else if(student.getFirstVaccine().getDate() == 0)
         {
             lvImVaccine1.setImageResource(R.drawable.cannot_immune);
         }
