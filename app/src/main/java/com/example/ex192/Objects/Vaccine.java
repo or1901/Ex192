@@ -1,5 +1,10 @@
 package com.example.ex192.Objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 
 /**
@@ -9,7 +14,7 @@ import java.util.Calendar;
  * @version	1
  * @since 9/4/2024
  */
-public class Vaccine {
+public class Vaccine implements Parcelable {
     private String placeTaken;
     private long dateInMillis;
 
@@ -45,4 +50,33 @@ public class Vaccine {
     public void setDate(long timeInMillis) {
         this.dateInMillis = timeInMillis;
     }
+
+    // Parcelable implementation
+    protected Vaccine(Parcel in) {
+        placeTaken = in.readString();
+        dateInMillis = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(placeTaken);
+        parcel.writeLong(dateInMillis);
+    }
+
+    public static final Creator<Vaccine> CREATOR = new Creator<Vaccine>() {
+        @Override
+        public Vaccine createFromParcel(Parcel in) {
+            return new Vaccine(in);
+        }
+
+        @Override
+        public Vaccine[] newArray(int size) {
+            return new Vaccine[size];
+        }
+    };
 }
