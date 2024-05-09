@@ -2,10 +2,15 @@ package com.example.ex192;
 
 import static com.example.ex192.FBRef.REF_STUDENTS;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,11 +28,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AllStudentsActivity extends AppCompatActivity {
+public class AllStudentsActivity extends AppCompatActivity
+        implements View.OnCreateContextMenuListener, AdapterView.OnItemLongClickListener {
     ListView lvStudents;
     ArrayList<Student> students;
     StudentAdapter studentsAdapter;
     Context activityContext;
+    AlertDialog.Builder adb;
+    AlertDialog ad;
+    int selectedStudentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +53,19 @@ public class AllStudentsActivity extends AppCompatActivity {
     }
 
     /**
-     * This function presents the options menu for moving between activities.
-     * @param menu the options menu in which you place your items.
-     * @return true in order to show the menu, otherwise false.
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    /**
      * This function initializes the views objects, and all the activity objects.
      */
     private void initViews() {
         lvStudents = findViewById(R.id.lvStudents);
+        lvStudents.setOnCreateContextMenuListener(this);
+        lvStudents.setOnItemLongClickListener(this);
 
         students = new ArrayList<Student>();
         studentsAdapter = new StudentAdapter(this, students);
         lvStudents.setAdapter(studentsAdapter);
 
         activityContext = this;
+        selectedStudentPosition = 0;
     }
 
     /**
@@ -100,6 +100,73 @@ public class AllStudentsActivity extends AppCompatActivity {
     }
 
     /**
+     * This function creates the context menu of actions to perform with the chosen student from the
+     * list view.
+     * @param menu The context menu object.
+     * @param v
+     * @param menuInfo
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Student Actions");
+        menu.add("Show & Edit");
+        menu.add("Delete");
+    }
+
+    /**
+     * This function reacts to the choice from the context menu of actions on the chosen Student -
+     * it validates the choice with alert dialog, and performs the desired action.
+     * @param item The chosen menu item.
+     * @return true for the menu to react, false otherwise.
+     */
+    public boolean onContextItemSelected(MenuItem item) {
+        String action = item.getTitle().toString();
+
+        adb = new AlertDialog.Builder(this);
+        adb.setCancelable(false);
+        adb.setTitle("Perform action on Student");
+        adb.setMessage("Are you sure you want to " + action.toLowerCase() + " the student?");
+
+        // Validates the choice with the user
+        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(action.equals("Show & Edit"))
+                {
+                }
+                else
+                {
+
+                }
+            }
+        });
+
+        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        ad = adb.create();
+        ad.show();
+
+        return super.onContextItemSelected(item);
+    }
+
+    /**
+     * This function presents the options menu for moving between activities.
+     * @param menu the options menu in which you place your items.
+     * @return true in order to show the menu, otherwise false.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
      * This function reacts to the user choice in the options menu - it moves to the chosen
      * activity from the menu, or resets the current one.
      * @param item the menu item that was selected.
@@ -113,5 +180,12 @@ public class AllStudentsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        selectedStudentPosition = i;
+
+        return false;
     }
 }
