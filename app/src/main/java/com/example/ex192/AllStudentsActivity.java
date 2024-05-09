@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class AllStudentsActivity extends AppCompatActivity
         implements View.OnCreateContextMenuListener, AdapterView.OnItemLongClickListener {
     ListView lvStudents;
-    ArrayList<Student> students;
+    ArrayList<Student> studentsList;
     StudentAdapter studentsAdapter;
     Context activityContext;
     AlertDialog.Builder adb;
@@ -60,8 +60,8 @@ public class AllStudentsActivity extends AppCompatActivity
         lvStudents.setOnCreateContextMenuListener(this);
         lvStudents.setOnItemLongClickListener(this);
 
-        students = new ArrayList<Student>();
-        studentsAdapter = new StudentAdapter(this, students);
+        studentsList = new ArrayList<Student>();
+        studentsAdapter = new StudentAdapter(this, studentsList);
         lvStudents.setAdapter(studentsAdapter);
 
         activityContext = this;
@@ -75,7 +75,7 @@ public class AllStudentsActivity extends AppCompatActivity
         REF_STUDENTS.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                students.clear();
+                studentsList.clear();
 
                 for(DataSnapshot gradeData : snapshot.getChildren())
                 {
@@ -83,7 +83,7 @@ public class AllStudentsActivity extends AppCompatActivity
                     {
                         for(DataSnapshot studData : classData.getChildren())
                         {
-                            students.add(studData.getValue(Student.class));
+                            studentsList.add(studData.getValue(Student.class));
                         }
                     }
                 }
@@ -136,7 +136,7 @@ public class AllStudentsActivity extends AppCompatActivity
                 }
                 else
                 {
-
+                    deleteStudent(selectedStudentPosition);
                 }
             }
         });
@@ -152,6 +152,24 @@ public class AllStudentsActivity extends AppCompatActivity
         ad.show();
 
         return super.onContextItemSelected(item);
+    }
+
+    /**
+     * This function deletes a given student from the DB and the students array list. Also updates
+     * the change in the students list view.
+     * @param studentIndex The index of the student to delete in the students array list.
+     */
+    private void deleteStudent(int studentIndex) {
+        Student student = studentsList.get(studentIndex);
+
+        // Deletes from the DB
+        REF_STUDENTS.child("" + student.getGrade())
+                .child("" + student.getClassNum()).child(student.getId()).removeValue();
+
+        studentsList.remove(studentIndex);
+        studentsAdapter.notifyDataSetChanged();
+
+        Toast.makeText(this, "Student was deleted!", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -182,6 +200,14 @@ public class AllStudentsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This function saves the index of the chosen student from the list view(when long clicked).
+     * @param adapterView The adapter view of the students list view.
+     * @param view The view object of the selected student in the lv.
+     * @param i The position of the chosen student in the list view.
+     * @param l The row of the chosen student in the list view.
+     * @return false.
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedStudentPosition = i;
