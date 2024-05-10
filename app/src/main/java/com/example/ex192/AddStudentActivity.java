@@ -107,6 +107,7 @@ public class AddStudentActivity extends AppCompatActivity {
         savedStudent = null;
         si = getIntent();
         savedStudent = (Student) si.getParcelableExtra("Student");
+        si.removeExtra("Student");
         idsList.clear();
 
         if(savedStudent != null)
@@ -499,14 +500,14 @@ public class AddStudentActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         editMode = false;
+        resetStudentFields();
+        tvAddStudent.setText("Add Student");
 
         if(id == R.id.menuAllStudents){
             si.setClass(this, AllStudentsActivity.class);
             startActivity(si);
         }
         else {
-            resetStudentFields();
-            tvAddStudent.setText("Add Student");
             getSavedIds();
         }
 
