@@ -98,11 +98,11 @@ public class StudentAdapter extends BaseAdapter {
         }
         else
         {
-            if(student.getFirstVaccine().getDate() != 0)
+            if(!student.getFirstVaccine().getPlaceTaken().isEmpty())
             {
                 lvImVaccine1.setImageResource(R.drawable.vaccine);
             }
-            if(student.getSecondVaccine().getDate() != 0)
+            if(!student.getSecondVaccine().getPlaceTaken().isEmpty())
             {
                 lvImVaccine2.setImageResource(R.drawable.vaccine);
             }
