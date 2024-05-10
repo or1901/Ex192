@@ -24,15 +24,8 @@ public class Vaccine implements Parcelable {
     }
 
     public Vaccine() {
-        this.placeTaken = null;
+        this.placeTaken = "";
         this.dateInMillis = Calendar.getInstance().getTimeInMillis();
-    }
-
-    public Vaccine(Vaccine otherVaccine) {
-        if(otherVaccine != null) {
-            this.placeTaken = otherVaccine.placeTaken;
-            this.dateInMillis = otherVaccine.dateInMillis;
-        }
     }
 
     public String getPlaceTaken() {

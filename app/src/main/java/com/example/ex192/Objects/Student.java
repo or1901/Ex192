@@ -26,8 +26,8 @@ public class Student implements Parcelable {
         this.grade = grade;
         this.classNum = classNum;
         this.canImmune = canImmune;
-        this.firstVaccine = new Vaccine(firstVaccine);
-        this.secondVaccine = new Vaccine(secondVaccine);
+        this.firstVaccine = firstVaccine;
+        this.secondVaccine = secondVaccine;
     }
 
     public Student() {
@@ -98,11 +98,11 @@ public class Student implements Parcelable {
     }
 
     public void setFirstVaccine(Vaccine vaccine) {
-        this.firstVaccine = new Vaccine(vaccine);
+        this.firstVaccine = vaccine;
     }
 
     public void setSecondVaccine(Vaccine vaccine) {
-        this.secondVaccine = new Vaccine(vaccine);
+        this.secondVaccine = vaccine;
     }
 
     // Parcelable implementation
