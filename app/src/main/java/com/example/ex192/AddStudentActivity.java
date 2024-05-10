@@ -57,7 +57,6 @@ public class AddStudentActivity extends AppCompatActivity {
     ArrayList<String> idsList;
     Student savedStudent;
     boolean editMode;
-    boolean[] vaccinesSaved;
 
     DialogInterface.OnClickListener onDialogBtnClick = new DialogInterface.OnClickListener() {
 
@@ -79,8 +78,6 @@ public class AddStudentActivity extends AppCompatActivity {
                     vaccinesData[currentVaccine].setPlaceTaken(dialogEtPlace.getText().toString());
                     Toast.makeText(activityContext, "Vaccine " + (currentVaccine + 1) +
                                     " saved!", Toast.LENGTH_SHORT).show();
-
-                    vaccinesSaved[currentVaccine] = true;
                 }
             }
 
@@ -148,7 +145,6 @@ public class AddStudentActivity extends AppCompatActivity {
         si = new Intent();
         idsList = new ArrayList<>();
         editMode = false;
-        vaccinesSaved = new boolean[2];
     }
 
     /**
@@ -505,6 +501,10 @@ public class AddStudentActivity extends AppCompatActivity {
 
         if(id == R.id.menuAllStudents){
             si.setClass(this, AllStudentsActivity.class);
+            startActivity(si);
+        }
+        else if(id == R.id.menuSortAndFilter) {
+            si.setClass(this, SortAndFilterActivity.class);
             startActivity(si);
         }
         else {

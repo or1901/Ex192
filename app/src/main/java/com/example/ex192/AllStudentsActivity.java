@@ -46,13 +46,13 @@ public class AllStudentsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
-        gi = getIntent();
         initViews();
     }
 
     protected void onStart() {
         super.onStart();
 
+        gi = getIntent();
         initStudentsList();
     }
 
@@ -201,8 +201,13 @@ public class AllStudentsActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         int id = item.getItemId();
 
-        if(id == R.id.menuAddStudent){
-            finish();
+        if(id == R.id.menuAddStudent) {
+            gi = new Intent(this, AddStudentActivity.class);
+            startActivity(gi);
+        }
+        else if(id == R.id.menuSortAndFilter) {
+            gi.setClass(this, SortAndFilterActivity.class);
+            startActivity(gi);
         }
 
         return super.onOptionsItemSelected(item);
