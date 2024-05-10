@@ -5,6 +5,7 @@ import static com.example.ex192.FBRef.REF_STUDENTS;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class AllStudentsActivity extends AppCompatActivity
@@ -37,12 +39,14 @@ public class AllStudentsActivity extends AppCompatActivity
     AlertDialog.Builder adb;
     AlertDialog ad;
     int selectedStudentPosition;
+    Intent gi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
+        gi = getIntent();
         initViews();
     }
 
@@ -133,6 +137,10 @@ public class AllStudentsActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 if(action.equals("Show & Edit"))
                 {
+                    // Goes to the AddStudentActivity and displays there
+                    gi = new Intent(activityContext, AddStudentActivity.class);
+                    gi.putExtra("Student", studentsList.get(selectedStudentPosition));
+                    startActivity(gi);
                 }
                 else
                 {
