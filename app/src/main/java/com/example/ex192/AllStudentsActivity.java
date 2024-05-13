@@ -81,13 +81,12 @@ public class AllStudentsActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 studentsList.clear();
 
-                for(DataSnapshot gradeData : snapshot.getChildren())
-                {
-                    for(DataSnapshot classData : gradeData.getChildren())
-                    {
-                        for(DataSnapshot studData : classData.getChildren())
-                        {
-                            studentsList.add(studData.getValue(Student.class));
+                for(DataSnapshot canImmunedData : snapshot.getChildren()) {
+                    for (DataSnapshot gradeData : canImmunedData.getChildren()) {
+                        for (DataSnapshot classData : gradeData.getChildren()) {
+                            for (DataSnapshot studData : classData.getChildren()) {
+                                studentsList.add(studData.getValue(Student.class));
+                            }
                         }
                     }
                 }
@@ -171,8 +170,14 @@ public class AllStudentsActivity extends AppCompatActivity
         Student student = studentsList.get(studentIndex);
 
         // Deletes from the DB
-        REF_STUDENTS.child("" + student.getGrade())
-                .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        if(student.getCanImmune()) {
+            REF_STUDENTS.child("CanImmune").child("" + student.getGrade())
+                    .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        }
+        else {
+            REF_STUDENTS.child("CannotImmune").child("" + student.getGrade())
+                    .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        }
 
         studentsList.remove(studentIndex);
         studentsAdapter.notifyDataSetChanged();
