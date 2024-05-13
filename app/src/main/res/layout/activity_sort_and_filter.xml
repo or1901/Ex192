@@ -27,7 +27,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.2" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:orientation="horizontal">
 
         <Space
@@ -69,7 +69,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Space
@@ -82,6 +82,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:backgroundTint="#006d77"
+            android:onClick="applyFilter"
             android:text="Apply"
             android:textColor="#edf6f9"
             android:textSize="16sp" />
@@ -109,7 +110,7 @@
             android:layout_weight="1" />
 
         <ListView
-            android:id="@+id/lvStudents"
+            android:id="@+id/lvFilteredStudents"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="12" />
