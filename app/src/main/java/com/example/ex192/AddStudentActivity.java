@@ -46,6 +46,7 @@ public class AddStudentActivity extends AppCompatActivity {
     Spinner spGrades;
     ArrayAdapter<String> spinnerAdp;
     AlertDialog.Builder adb;
+    AlertDialog ad;
     LinearLayout vaccineDialog;
     EditText dialogEtPlace, dialogEtDate, etPrivateName, etFamilyName, etId, etClass;
     Switch swCanImmune;
@@ -166,7 +167,8 @@ public class AddStudentActivity extends AppCompatActivity {
         adb.setPositiveButton("Save", onDialogBtnClick);
         adb.setNegativeButton("Cancel", onDialogBtnClick);
 
-        adb.show();
+        ad = adb.create();
+        ad.show();
 
         displaySavedVaccineData(vaccinesData[currentVaccine]);
     }
@@ -335,13 +337,12 @@ public class AddStudentActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 idsList.clear();
 
-                for(DataSnapshot gradeData : snapshot.getChildren())
-                {
-                    for(DataSnapshot classData : gradeData.getChildren())
-                    {
-                        for(DataSnapshot studData : classData.getChildren())
-                        {
-                            idsList.add(studData.getKey());
+                for(DataSnapshot canImmunedData : snapshot.getChildren()) {
+                    for (DataSnapshot gradeData : canImmunedData.getChildren()) {
+                        for (DataSnapshot classData : gradeData.getChildren()) {
+                            for (DataSnapshot studData : classData.getChildren()) {
+                                idsList.add(studData.getKey());
+                            }
                         }
                     }
                 }
@@ -375,10 +376,7 @@ public class AddStudentActivity extends AppCompatActivity {
                         deleteOldWhenNeeded(savedStudent, student);
                     }
 
-                    // Saves in the DB
-                    REF_STUDENTS.child("" + getSelectedGrade())
-                            .child(etClass.getText().toString())
-                            .child(etId.getText().toString()).setValue(student);
+                    saveStudInDB(student);
 
                     Toast.makeText(activityContext, "Student saved!",
                             Toast.LENGTH_SHORT).show();
@@ -453,9 +451,14 @@ public class AddStudentActivity extends AppCompatActivity {
      * @param student The student object to delete.
      */
     private void deleteStudent(Student student) {
-        // Deletes from the DB
-        REF_STUDENTS.child("" + student.getGrade())
-                .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        if(student.getCanImmune()) {
+            REF_STUDENTS.child("CanImmune").child("" + student.getGrade())
+                    .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        }
+        else {
+            REF_STUDENTS.child("CannotImmune").child("" + student.getGrade())
+                    .child("" + student.getClassNum()).child(student.getId()).removeValue();
+        }
     }
 
     /**
@@ -468,10 +471,27 @@ public class AddStudentActivity extends AppCompatActivity {
     private void deleteOldWhenNeeded(Student oldStudent, Student newStudent) {
         if((newStudent.getClassNum() != oldStudent.getClassNum()) ||
                 (oldStudent.getGrade() != newStudent.getGrade()) ||
-                (!oldStudent.getId().equals(newStudent.getId())))
+                (!oldStudent.getId().equals(newStudent.getId())) ||
+                (!oldStudent.getCanImmune() == newStudent.getCanImmune()))
         {
             deleteStudent(oldStudent);
         }
+    }
+
+    /**
+     * This function saves a given student object in the DB.
+     * @param student The student object to save.
+     */
+    private void saveStudInDB(Student student) {
+        String canImmune = "CannotImmune";
+
+        if(student.getCanImmune()) {
+            canImmune = "CanImmune";
+        }
+
+        REF_STUDENTS.child(canImmune).child("" + getSelectedGrade())
+                .child(etClass.getText().toString())
+                .child(etId.getText().toString()).setValue(student);
     }
 
     /**
