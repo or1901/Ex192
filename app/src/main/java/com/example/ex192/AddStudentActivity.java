@@ -386,6 +386,9 @@ public class AddStudentActivity extends AppCompatActivity {
                         vaccinesData[1] = new Vaccine();
                         idsList.add(etId.getText().toString());  // Adds the new student id to the list
                     }
+                    else {
+                        savedStudent = new Student(student);
+                    }
                 }
 
                 else {
@@ -472,7 +475,7 @@ public class AddStudentActivity extends AppCompatActivity {
         if((newStudent.getClassNum() != oldStudent.getClassNum()) ||
                 (oldStudent.getGrade() != newStudent.getGrade()) ||
                 (!oldStudent.getId().equals(newStudent.getId())) ||
-                (!oldStudent.getCanImmune() == newStudent.getCanImmune()))
+                (!(oldStudent.getCanImmune() == newStudent.getCanImmune())))
         {
             deleteStudent(oldStudent);
         }

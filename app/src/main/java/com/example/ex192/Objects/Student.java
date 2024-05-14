@@ -41,6 +41,17 @@ public class Student implements Parcelable {
         this.secondVaccine = new Vaccine();
     }
 
+    public Student(Student other) {
+        this.privateName = other.privateName;
+        this.familyName = other.familyName;
+        this.id = other.id;
+        this.grade = other.grade;
+        this.classNum = other.classNum;
+        this.canImmune = other.canImmune;
+        this.firstVaccine = new Vaccine(other.firstVaccine);
+        this.secondVaccine = new Vaccine(other.secondVaccine);
+    }
+
     public String getPrivateName() {
         return this.privateName;
     }
