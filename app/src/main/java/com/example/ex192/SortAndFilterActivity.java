@@ -100,7 +100,7 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
             // Save button
             if(which == DialogInterface.BUTTON_POSITIVE) {
                 if(gradesList.isEmpty()) {
-                    Toast.makeText(activityContext, "There are no existing classes!",
+                    Toast.makeText(activityContext, "There are no existing grades!",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -308,8 +308,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
      * This function initializes the classes spinner with the classes of the first saved grade.
      */
     private void initClassSpinner() {
-        copyArrayList(classesList.get(0), currentClassesList);
-        classesSpinnerAdp.notifyDataSetChanged();
+        if(!classesList.isEmpty()) {
+            copyArrayList(classesList.get(0), currentClassesList);
+            classesSpinnerAdp.notifyDataSetChanged();
+        }
     }
 
     /**
