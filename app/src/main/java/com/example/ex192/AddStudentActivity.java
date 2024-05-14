@@ -36,7 +36,7 @@ import java.util.Objects;
 
 /**
  * Add Student Activity:
- * inputs the data of new Students and saves them in the DB.
+ * inputs the data of new Students and saves them in the DB. Also used for editing existing students.
  * @author Ori Roitzaid <or1901 @ bs.amalnet.k12.il>
  * @version	1
  * @since 9/4/2024

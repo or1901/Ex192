@@ -30,6 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * All Students Activity:
+ * displays all existing students in the DB and allows to delete/edit each one of them.
+ * @author Ori Roitzaid <or1901 @ bs.amalnet.k12.il>
+ * @version	1
+ * @since 6/5/2024
+ */
 public class AllStudentsActivity extends AppCompatActivity
         implements View.OnCreateContextMenuListener, AdapterView.OnItemLongClickListener {
     ListView lvStudents;
