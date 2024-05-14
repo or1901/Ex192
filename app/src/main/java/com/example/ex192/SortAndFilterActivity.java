@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,11 +28,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Sort and Filter Activity:
+ * gives 4 filter options to display specific students with given criteria.
+ * @author Ori Roitzaid <or1901 @ bs.amalnet.k12.il>
+ * @version	1
+ * @since 10/5/2024
+ */
 public class SortAndFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] filterOptions = {"Immune students of a given class", "Immune students of a given grade",
             "All immune students", "All students that can't immune"};
     Spinner spFilterOptions, classDialogSpGrade, classDialogSpClass, gradeDialogSpGrade;
-    TextView dialogTvClass;
     ArrayAdapter<String> filtersSpinnerAdp;
     ArrayAdapter<Integer> gradesSpinnerAdp, classesSpinnerAdp;
     Intent gi;
@@ -50,7 +55,8 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
     DialogInterface.OnClickListener onClassDialogBtnClick = new DialogInterface.OnClickListener() {
 
         /**
-         * This function reacts to the choice of the user in the filter alert dialog.
+         * This function reacts to the choice of the user in the filter alert dialog of inputting
+         * class data.
          * @param dialog The filter alert dialog.
          * @param which The alert dialog button clicked.
          */
@@ -84,7 +90,8 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
     DialogInterface.OnClickListener onGradeDialogBtnClick = new DialogInterface.OnClickListener() {
 
         /**
-         * This function reacts to the choice of the user in the filter alert dialog.
+         * This function reacts to the choice of the user in the filter alert dialog of inputting
+         * grade data.
          * @param dialog The filter alert dialog.
          * @param which The alert dialog button clicked.
          */
@@ -114,7 +121,7 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort_and_filter);
 
-        initViews();
+        initAll();
     }
 
     @Override
@@ -124,7 +131,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         gi = getIntent();
     }
 
-    private void initViews() {
+    /**
+     * This function initializes the views objects and all the other objects used in the activity.
+     */
+    private void initAll() {
         spFilterOptions = findViewById(R.id.spFilterOptions);
         lvFilteredStudents = findViewById(R.id.lvFilteredStudents);
 
@@ -142,6 +152,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         lvFilteredStudents.setAdapter(studentsAdapter);
     }
 
+    /**
+     * This function applies the chosen filter option from the spinner, when the Apply button is clicked.
+     * @param view The view object of the apply button.
+     */
     public void applyFilter(View view) {
         int filter = spFilterOptions.getSelectedItemPosition();
 
@@ -165,6 +179,9 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         }
     }
 
+    /**
+     * This function displays the alert dialog for inputting class data(for this filter option).
+     */
     private void displayClassDialog() {
         classDetailsDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.class_details_dialog, null);
 
@@ -195,6 +212,9 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         ad.show();
     }
 
+    /**
+     * This function displays the alert dialog for inputting grade data(for this filter option).
+     */
     private void displayGradeDialog() {
         gradeDetailsDialog = (LinearLayout) getLayoutInflater().inflate(R.layout.grade_details_dialog, null);
 
@@ -219,6 +239,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         ad.show();
     }
 
+    /**
+     * This function saves the existing grades and classes from the DB in the suitable arraylists.
+     * @param dialogNum The number of dialog to display the grades and classes in.
+     */
     private void saveGradesAndClasses(int dialogNum) {
         REF_STUDENTS.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -227,16 +251,20 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
                 gradesList.clear();
                 classesList.clear();
 
-                for(DataSnapshot canImmuneData : snapshot.getChildren()) {
-                    for (DataSnapshot gradeData : canImmuneData.getChildren()) {
+                for(DataSnapshot canImmuneData : snapshot.getChildren())
+                {
+                    for (DataSnapshot gradeData : canImmuneData.getChildren())
+                    {
                         currentGrade = Integer.parseInt(gradeData.getKey());
 
+                        // Checks if the grade exists already in the list
                         if(!gradesList.contains(currentGrade)) {
                             classesList.add(new ArrayList<>());
                             gradesList.add(currentGrade);
                         }
 
-                        for (DataSnapshot classData : gradeData.getChildren()) {
+                        for (DataSnapshot classData : gradeData.getChildren())
+                        {
                             classesList.get(gradesList.indexOf(currentGrade)).add(Integer.parseInt(classData.getKey()));
                         }
 
@@ -246,6 +274,7 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
 
                 gradesSpinnerAdp.notifyDataSetChanged();
 
+                // Only if it's the class dialog, inits the classes spinner
                 if(dialogNum == 0)
                     initClassSpinner();
             }
@@ -258,7 +287,14 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-
+    /**
+     * This function is called when a grade is selected in the grades spinner - it updates the
+     * classes spinner with the existing classes of the chosen grade.
+     * @param adapterView The adapter view object of the spinner.
+     * @param view The view object of the spinner.
+     * @param i The position of the selected grade in the grades spinner.
+     * @param l The position of the selected grade in the grades spinner.
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         copyArrayList(classesList.get(i), currentClassesList);
@@ -266,20 +302,30 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 
-    }
-
+    /**
+     * This function initializes the classes spinner with the classes of the first saved grade.
+     */
     private void initClassSpinner() {
         copyArrayList(classesList.get(0), currentClassesList);
         classesSpinnerAdp.notifyDataSetChanged();
     }
 
+    /**
+     * This function copies the values of one arraylist to another one.
+     * @param src The arraylist to copy its values from.
+     * @param dst The arraylist to copy its values to.
+     */
     private void copyArrayList(ArrayList<Integer> src, ArrayList<Integer> dst) {
         dst.clear();
         dst.addAll(src);
     }
 
+    /**
+     * This function saves all the unimmune students in the students list, and then shows them in
+     * the list view.
+     */
     private void showUnimmuneStudents() {
         REF_STUDENTS.child("CannotImmune").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -315,6 +361,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+    /**
+     * This function saves all the immuned students in the students list, and then shows them in
+     * the list view.
+     */
     private void showAllImmunedStudents() {
         REF_STUDENTS.child("CanImmune").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -355,6 +405,12 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+    /**
+     * This function saves all the immuned students of a given class in the students list ordered by
+     * their family name, and then shows them in the list view.
+     * @param grade The grade number of the given class.
+     * @param classNum The given class's number.
+     */
     private void showClassImmunedStudents(int grade, int classNum) {
         Query query = REF_STUDENTS.child("CanImmune").child(grade + "").
                 child(classNum + "").orderByChild("familyName");
@@ -392,6 +448,11 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+    /**
+     * This function saves all the immuned students of a given grade in the students,
+     * and then shows them in the list view.
+     * @param grade The given grade's number.
+     */
     private void showGradeImmunedStudents(int grade) {
         REF_STUDENTS.child("CanImmune").child("" + grade).
                 addListenerForSingleValueEvent(new ValueEventListener() {
@@ -430,6 +491,11 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+    /**
+     * This function checks whether a given student is immuned(got 2 vaccines).
+     * @param student The given student to check.
+     * @return Whether the given student is immuned, or not.
+     */
     private boolean isStudentImmune(Student student) {
         return (!student.getFirstVaccine().getPlaceTaken().isEmpty()) &&
                 (!student.getSecondVaccine().getPlaceTaken().isEmpty());
