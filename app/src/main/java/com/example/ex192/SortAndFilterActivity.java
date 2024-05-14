@@ -530,6 +530,10 @@ public class SortAndFilterActivity extends AppCompatActivity implements AdapterV
             gi.setClass(this, AllStudentsActivity.class);
             startActivity(gi);
         }
+        else if(id == R.id.menuCredits) {
+            gi.setClass(this, CreditsActivity.class);
+            startActivity(gi);
+        }
 
         return super.onOptionsItemSelected(item);
     }

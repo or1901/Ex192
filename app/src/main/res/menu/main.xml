@@ -16,4 +16,9 @@
         android:title="Sort and Filter"
         android:orderInCategory="300"/>
 
+    <item
+        android:id="@+id/menuCredits"
+        android:title="Credits"
+        android:orderInCategory="400"/>
+
 </menu>

@@ -15,19 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.ex192.Objects.Student;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -219,6 +214,10 @@ public class AllStudentsActivity extends AppCompatActivity
         }
         else if(id == R.id.menuSortAndFilter) {
             gi.setClass(this, SortAndFilterActivity.class);
+            startActivity(gi);
+        }
+        else if(id == R.id.menuCredits) {
+            gi.setClass(this, CreditsActivity.class);
             startActivity(gi);
         }
 
