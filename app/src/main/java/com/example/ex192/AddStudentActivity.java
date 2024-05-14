@@ -95,7 +95,7 @@ public class AddStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
-        initViews();
+        initAll();
     }
 
     @Override
@@ -122,9 +122,9 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     /**
-     * This function initializes the views objects.
+     * This function initializes the views objects and all other objects.
      */
-    private void initViews() {
+    private void initAll() {
         etPrivateName = findViewById(R.id.etPrivateName);
         etFamilyName = findViewById(R.id.etFamilyName);
         etId = findViewById(R.id.etId);
@@ -210,8 +210,14 @@ public class AddStudentActivity extends AppCompatActivity {
      */
     public void getSecondVaccineData(View view) {
         if(swCanImmune.isChecked()) {
-            currentVaccine = 1;
-            displayVaccineDialog(2);
+            if(vaccinesData[0] != null && !vaccinesData[0].getPlaceTaken().isEmpty()) {
+                currentVaccine = 1;
+                displayVaccineDialog(2);
+            }
+            else {
+                Toast.makeText(activityContext, "You must enter the first vaccine before the second!",
+                        Toast.LENGTH_LONG).show();
+            }
         }
         else {
             Toast.makeText(activityContext, "Student can't immune!",
